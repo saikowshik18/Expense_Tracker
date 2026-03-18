@@ -13,7 +13,11 @@ const PORT = process.env.PORT || 5000
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://expense-tracker-nu-five-63.vercel.app/'  // replace with your Vercel URL
+  ],
   credentials: true
 }))
 app.use(express.json())
