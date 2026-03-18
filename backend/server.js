@@ -11,15 +11,11 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://expense-tracker-nu-five-63.vercel.app'
-  ],
-  credentials: true
+  origin: '*',
+  credentials: false
 }))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 

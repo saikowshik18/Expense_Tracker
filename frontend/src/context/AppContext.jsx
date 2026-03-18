@@ -3,9 +3,14 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 
 const AppContext = createContext(null)
+
+
 const API = axios.create({ 
   baseURL: (import.meta.env.VITE_API_URL || '') + '/api' 
 })
+
+
+
 const initialState = {
   trips: [],
   currentTrip: null,
