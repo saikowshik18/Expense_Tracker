@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #0e0e11;
+    --bg-surface: #141418;
+    --bg-elevated: #1a1a20;
+    --bg-hover: #1f1f27;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.13);
+    --accent: #f5a623;
+    --accent-dim: rgba(245, 166, 35, 0.15);
+    --green: #4ecb8d;
+    --green-dim: rgba(78, 203, 141, 0.15);
+    --red: #e25c7a;
+    --red-dim: rgba(226, 92, 122, 0.15);
+    --blue: #5b9cf6;
+    --blue-dim: rgba(91, 156, 246, 0.15);
+    --coral: #e8855a;
+    --coral-dim: rgba(232, 133, 90, 0.15);
+    --purple: #a579f6;
+    --purple-dim: rgba(165, 121, 246, 0.15);
+    --text: #f0ede8;
+    --text-2: #9a9691;
+    --text-3: #5e5c58;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-base);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .font-display { font-family: 'Syne', sans-serif; }
+
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .card-elevated {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .input-base {
+    @apply w-full rounded-xl px-3.5 py-2.5 text-sm outline-none transition-all duration-200;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .input-base::placeholder { color: var(--text-3); }
+  .input-base:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+  .input-base:hover:not(:focus) { border-color: rgba(255,255,255,0.18); }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 cursor-pointer select-none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    @apply btn px-5 py-2.5 text-sm;
+    background: var(--accent);
+    color: #0e0e11;
+  }
+  .btn-primary:hover { background: #ffb940; }
+
+  .btn-secondary {
+    @apply btn px-4 py-2.5 text-sm;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    color: var(--text-2);
+  }
+  .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.22); }
+
+  .btn-ghost {
+    @apply btn px-3 py-2 text-sm;
+    color: var(--text-2);
+  }
+  .btn-ghost:hover { background: var(--bg-elevated); color: var(--text); }
+
+  .btn-danger {
+    @apply btn px-3 py-2 text-sm;
+    color: var(--red);
+    border: 1px solid rgba(226, 92, 122, 0.25);
+  }
+  .btn-danger:hover { background: var(--red-dim); }
+
+  .btn-icon {
+    @apply btn p-2 rounded-lg;
+    color: var(--text-3);
+  }
+  .btn-icon:hover { background: var(--bg-hover); color: var(--text-2); }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .tab-bar {
+    @apply flex gap-1 p-1 rounded-xl;
+    background: var(--bg-elevated);
+  }
+  .tab-item {
+    @apply flex-1 py-2 px-3 rounded-lg text-sm font-medium text-center transition-all duration-200 cursor-pointer;
+    color: var(--text-3);
+  }
+  .tab-item:hover { color: var(--text-2); }
+  .tab-item.active {
+    background: var(--bg-hover);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+
+  .member-avatar {
+    @apply flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold text-xs select-none;
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.15s ease-out;
+  }
+  .modal-box {
+    @apply w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl overflow-y-auto;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    border-bottom: none;
+    max-height: 92vh;
+    animation: slideUp 0.25s ease-out;
+  }
+  @media (min-width: 640px) {
+    .modal-box { border-bottom: 1px solid var(--border-strong); }
+  }
+  .modal-header {
+    @apply flex items-center justify-between px-6 pt-6 pb-4;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-title { @apply text-lg font-display font-semibold; }
+  .modal-body { @apply px-6 py-5; }
+  .modal-footer {
+    @apply flex items-center justify-end gap-3 px-6 py-4;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    @apply block text-xs font-medium uppercase tracking-widest mb-2;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+  }
+
+  .progress-track {
+    @apply h-1.5 rounded-full overflow-hidden;
+    background: var(--bg-elevated);
+  }
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-elevated) 25%, var(--bg-hover) 50%, var(--bg-elevated) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .split-option {
+    @apply flex-1 flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl cursor-pointer transition-all duration-200 border;
+    border-color: var(--border-strong);
+    background: var(--bg-elevated);
+    color: var(--text-2);
+  }
+  .split-option:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .split-option.active {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .split-option .split-icon { font-size: 1.25rem; }
+  .split-option .split-label { font-size: 11px; font-weight: 500; text-align: center; }
+}
+
+.modal-box::-webkit-scrollbar { width: 3px; }
+.modal-box::-webkit-scrollbar-thumb { background: var(--border-strong); }
+
+.toast-dark {
+  background: var(--bg-elevated) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border-strong) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
