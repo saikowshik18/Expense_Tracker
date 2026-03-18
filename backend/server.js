@@ -1,6 +1,5 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import cors from 'cors'
 import dotenv from 'dotenv'
 import tripRoutes from './routes/trips.js'
 import expenseRoutes from './routes/expenses.js'
@@ -11,10 +10,16 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(cors({
-  origin: '*',
-  credentials: false
-}))
+// Manual CORS headers
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200)
+  }
+  next()
+})
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -40,7 +45,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message || 'Internal server error' })
 })
 
-// Connect to MongoDB and start server
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
